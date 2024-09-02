@@ -1,3 +1,14 @@
+
+/envs_configs directory contains .yml files of [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) environments for different tasks as following:
+  * hic_and_cnr_env.yml: CUT_and_RUN processing and Hi_C processing
+  * deeptools.yml: heatmaps on CUT&RUN and ATAC-Seq data
+  * homer.yml: Homer motif enrichment on ATAC-Seq peaks
+  * nucleoatac.yml: nucleosome positioning inference using ATAC-Seq peaks
+  * coolpuppy.yml: pileups on Hi-C maps
+  * mustache.yml: call peaks in Hi-C data
+  * pygenometracks.yml: create figures of Hi-C, ATAC-Seq and CUT&RUN tracks
+       
+
 ## Overview figures from manuscript mapped to scripts
 
 | Script                                                   | Figures                      | Brief description                                        |
