@@ -1,0 +1,7 @@
+sample_id	read_1	read_2	sample_name
+WT_h3k27me3_1	WT_h3k27me3_1_R1.fq.gz	WT_h3k27me3_1_R2.fq.gz	WT_h3k27me3
+C9_h3k27me3_1	C9_h3k27me3_1_R1.fq.gz	C9_h3k27me3_1_R2.fq.gz	C9_h3k27me3
+WT_h2ak119ub_1	WT_h2ak119ub_1_R1.fq.gz	WT_h2ak119ub_1_R2.fq.gz	WT_h2ak119ub
+C9_h2ak119ub_1	C9_h2ak119ub_1_R1.fq.gz	C9_h2ak119ub_1_R2.fq.gz	C9_h2ak119ub
+WT_igg_ctrl_1	WT_igg_ctrl_1_R1.fq.gz	WT_igg_ctrl_1_R2.fq.gz	WT_igg_ctrl
+C9_igg_ctrl_1	C9_igg_ctrl_1_R1.fq.gz	C9_igg_ctrl_1_R2.fq.gz	C9_igg_ctrl
