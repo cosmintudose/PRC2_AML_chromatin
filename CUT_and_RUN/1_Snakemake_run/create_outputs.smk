@@ -6,7 +6,7 @@ rule bedgraph: #code taken from https://github.com/FredHutch/SEACR
 	output:
 		"bedgraphs/{sample}/{sample}.bedgraph"
 	params:
-		genome = "/mnt/data/genome_bwa_mem2/chrom.sizes"
+		genome = "../../genome/chrom.sizes"
 	shell:
 		"samtools sort -n {input} | "
 		"bedtools bamtobed -bedpe -i | "
@@ -21,7 +21,7 @@ rule bedgraph_to_bigwig:
 	output:
 		"bedgraphs/{sample}/{sample}.bigwig"
 	params:
-		genome = "/mnt/data/genome_bwa_mem2/chrom.sizes"
+		genome = "../../genome/chrom.sizes"
 	shell:
 		"bedGraphToBigWig {input} "
 		"{params.genome} "

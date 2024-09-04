@@ -9,7 +9,7 @@ rule align_reads:
 		stats = "stats_{sample}_bowtie2.txt"
 	threads: 8
 	params:
-		genome_idx = "/mnt/data/Bowtie2Index/genome" #path to genome sample
+		genome_idx = "../../genome/Bowtie2Index/genome" #path to genome sample
 	shell:
 		"bowtie2 --end-to-end --dovetail -I 10 -X 700 --no-mixed --no-discordant --threads {threads} -x {params.genome_idx} -1 {input.read1} -2 {input.read2} "
 		"-S {output.alignment} &> {output.stats}"
@@ -38,7 +38,7 @@ rule sort_bam:
     output:
         temp("sorted_bams/{sample}/{sample}_sorted.bam")
     shell:
-        "java -jar /mnt/data/scripts/picard.jar SortSam I={input.bam_files} "
+        "java -jar ../../scripts/picard.jar SortSam I={input.bam_files} "
         "O={output} "
         "SORT_ORDER=coordinate "
         "VALIDATION_STRINGENCY=LENIENT"
