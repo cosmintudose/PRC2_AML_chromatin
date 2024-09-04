@@ -1,0 +1,95 @@
+SAMPLES_ALL = ["OCI_AML2_WT","OCI_AML2_C9", "OCI_AML3_WT"]
+#SAMPLES_ALL = ["K562"]
+
+resolutions = ["15000", "30000", "60000"]
+
+loop_types_list = ["all_samples", "all_called", "OCI_AML2_C9", "OCI_AML2_WT_AML3_WT", "OCI_AML3_WT", "OCI_AML2_WT"]
+
+#The domain files are obtained after merging H3K27me3 peaks using bedtools merge -l <distance>; distances used are "15kb", "30kb", "60kb", "120kb", "240kb"
+peak_types_list = ["C9_unique_peaks", "WT_C9_overlap_peaks", "WT_unique_peaks"]
+
+domains_list_pileups = ["15kb", "30kb", "60kb", "120kb", "240kb"]
+resolutions_domains_pileups = ["30000", "60000", "120000"]
+#resolutions_domains_pileups = ["10000", "50000", "100000"] #k562 resolutions - these need to be used as the K562 mcool file contains different resolutions
+
+
+rule all:
+	input:
+		expand("../cooler_files/{sample}_balanced.mcool", sample = SAMPLES_ALL, res = resolutions_domains_pileups),
+		expand("./expected_interactions/{sample}_{res}_expected.tsv", sample = SAMPLES_ALL, res = resolutions_domains_pileups),
+		expand("./pileup_plots/{loop_types}/{sample}_{res}_{loop_types}.png", sample = SAMPLES_ALL, res = resolutions, peak_types = loop_types_list), 
+		expand("./pileup_plots/cut_and_run/pups_over_domains/peaks_from_{peak_types}/{sample}_sample_peaks_{res}_domain_size_{domain_size}.pdf", sample = SAMPLES_ALL, res = resolutions_domains_pileups, peak_types = peak_types_list, domain_size = domains_list_pileups)
+
+rule get_expected_interactions:
+	input:
+		"../cooler_files/{sample}_balanced.mcool"
+	output:
+		"./expected_interactions/{sample}_{res}_expected.tsv"
+	shell:
+		"cooltools expected-cis {input}::resolutions/{wildcards.res} --nproc 1 -o {output}"
+
+
+
+rule calculate_pups:
+	input:
+		exp_inter="./expected_interactions/{sample}_{res}_expected.tsv",
+		cool="../cooler_files/{sample}_balanced.mcool",
+		bed="../results_files/{peak_types}.bedpe"
+	output:
+		"./pileup_plots/{loop_types}/{sample}_{res}_{loop_types}.clpy" 
+	threads: 23
+	shell:
+		"coolpup.py --nproc {threads} "
+		"--expected {input.exp_inter} "
+		#"--maxdist 5000000 "
+		"--flank 150000 {input.cool}::resolutions/{wildcards.res} {input.bed} "
+		"--outname {output}"
+
+
+rule plot_pups:
+	input:
+		rules.calculate_pups.output
+	output:
+		"./pileup_plots/{loop_types}/{sample}_{res}_{loop_types}.png"
+	shell:
+		"plotpup.py --cmap coolwarm "
+		"--plot_ticks --not_symmetric --height 1.5 "
+		"--vmin 1 --vmax 2 "
+		"--dpi 800 "
+		"--input_pups {input} "
+		"--output {output}" 
+
+
+
+rule calculate_pups_over_domains:
+	input:
+		exp_inter="./expected_interactions/{sample}_{res}_expected.tsv",
+		cool="../cooler_files/{sample}_balanced.mcool",
+		bed="./hic_input/{peak_types}_h3k27me3_{domain_size}_domains.bed"
+	output:
+		"./pileup_plots/cut_and_run/pups_over_domains/peaks_from_{peak_types}/{sample}_sample_peaks_{res}_domain_size_{domain_size}.clpy" 
+	threads: 23
+	params: 
+		flanking=lambda wildcards: 20 * int(wildcards.res)
+	shell:
+		"coolpup.py --nproc {threads} "
+		"--expected {input.exp_inter} "
+		#"--subset 1000 "
+		#"--mindist 100000 "
+		#"--maxdist 5000000 "
+		"--flank {params.flanking} {input.cool}::resolutions/{wildcards.res} {input.bed} "
+		"--outname {output}"
+
+
+rule plot_pups_over_domains:
+	input:
+		rules.calculate_pups_over_domains.output
+	output:
+		"./pileup_plots/cut_and_run/pups_over_domains/peaks_from_{peak_types}/{sample}_sample_peaks_{res}_domain_size_{domain_size}.pdf" 
+	shell:
+		"plotpup.py --cmap coolwarm "
+		"--plot_ticks --not_symmetric --height 1.5 "
+		"--vmin 1 --vmax 1.5 "
+		"--dpi 800 "
+		"--input_pups {input} "
+		"--output {output}" 
