@@ -1,4 +1,8 @@
 
+
+For reproducibility of the R scripts an environment file is provided in the form of renv.lock 
+
+
 /envs_configs directory contains .yml files of [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) environments for different tasks as following:
   * hic_and_cnr_env.yml: CUT_and_RUN processing and Hi_C processing
   * deeptools.yml: heatmaps on CUT&RUN and ATAC-Seq data
