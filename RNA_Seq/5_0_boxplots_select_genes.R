@@ -1,7 +1,7 @@
 library(tidyverse)
 
 #select any gene to plot boxplot WT, C5, and C9 - example given is with LIN28B and CDK6 (Figure 6C)
-selected_genes <- c("LIN28B", "CDK6")
+selected_genes <- c("LIN28B", "CDK6", "PCDH9")
 
 selected_genes_expression <- read.csv("./RNA_Seq/results_files/normalised_counts_aml2_wt_vs_clones.tsv", sep = "\t") %>%
   dplyr::filter(geneID %in% selected_genes)
@@ -24,6 +24,6 @@ plot_boxplots <- boxplots %>%
   theme(panel.grid = element_blank(), legend.position = "none") +
   labs(y = expression("log"[2] *"(tpm+1)"), legend = NA, title = "RNA-Seq")
 
-ggsave("./RNA_Seq/plots/selected_genes_boxplots.pdf", 
-       plot = p1, width = 16, height = 12, 
+ggsave("selected_genes_boxplots.pdf", 
+       plot = plot_boxplots, width = 24, height = 20, 
        dpi = 1000, units = "cm", device = cairo_pdf) 
