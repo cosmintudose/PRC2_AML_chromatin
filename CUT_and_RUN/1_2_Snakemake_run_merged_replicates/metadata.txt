@@ -1,0 +1,10 @@
+sample_id	file	sample_name
+WT_me3	WT_me3_deduped.bam	WT_me3
+C5_me3	C5_me3_deduped.bam	C5_me3
+C9_me3	C9_me3_deduped.bam	C9_me3
+WT_ac	WT_ac_deduped.bam	WT_ac
+C5_ac	C5_ac_deduped.bam	C5_ac
+C9_ac	C9_ac_deduped.bam	C9_ac
+WT_IgG_1	WT_IgG_1_deduped.bam	WT_IgG
+C5_IgG_1	C5_IgG_1_deduped.bam	C5_IgG
+C9_IgG_1	C9_IgG_1_deduped.bam	C9_IgG

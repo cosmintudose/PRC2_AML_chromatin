@@ -1,0 +1,29 @@
+import pandas as pd
+import re
+import numpy as np
+
+configfile: "config.yaml"
+
+samples = pd.read_csv(config["samples"], sep = '\t').set_index("sample_id", drop=False)
+SAMPLE_NAMES = samples['sample_id'].tolist()
+
+conditions = ["C5", "C9", "WT"]
+marks = ["me3", "ac"]
+
+
+localrules: all
+
+rule all:
+	input:
+		expand("deduped/{sample}/{sample}_deduped.bam.bai",
+			sample = SAMPLE_NAMES),
+		expand("bedgraphs/{sample}/{sample}_downsampled.bedgraph",
+			sample = SAMPLE_NAMES),
+		expand("bedgraphs/{sample}/{sample}_downsampled.bigwig", 
+			sample = SAMPLE_NAMES),
+		expand("bigwigs/{sample}_downsampled.bigwig", 
+			sample = SAMPLE_NAMES),
+		expand("seacr/{condition}_{mark}_downsampled", #this crashes. Keeps clashing with wildcards from rule bedgraph. Can be fixed manually by running everything without this last step, then running this last step with n_cores == number of jobs
+			sample = SAMPLE_NAMES, condition = conditions, mark = marks)
+
+include: "create_outputs.smk" #this doesn't work with the microc_env due to incompatibility with deeptools/matplotlib version - swithing to the deeptools environment
