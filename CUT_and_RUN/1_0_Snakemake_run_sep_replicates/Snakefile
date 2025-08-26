@@ -8,7 +8,7 @@ samples = pd.read_csv(config["samples"], sep = '\t').set_index("sample_id", drop
 SAMPLE_NAMES = samples['sample_id'].tolist()
 
 conditions = ["C5", "C9", "WT"]
-marks = ["ub", "me3", "ac"]
+marks = ["me3", "ac"]
 replicates = ["1", "2"]
 
 
