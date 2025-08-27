@@ -66,34 +66,42 @@ upset_atac <- ComplexUpset::upset(
 ggsave(filename = "./ATAC_Seq/plots/upset_peaks_overlaps.pdf", plot = upset_atac, 
        width = 18, height = 10, dpi = 800, units = "cm", device = cairo_pdf)
 
-dir.create("./homer_input")
-####printing files for homer analysis
+dir.create("./input_after_upset")
+####printing files for downstream analysis
 OCI_AML2_WT_peaks_only <- venn$overlapList[["001"]][["WT_ATAC_peaks.bed"]] %>%
   as.data.frame() %>%
   dplyr::select(c("seqnames", "start", "end"))
 
-write.table(OCI_AML2_WT_peaks_only, file = "./homer_input_after_upset/OCI_AML2_WT_peaks_only.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
+write.table(OCI_AML2_WT_peaks_only, file = "./input_after_upset/OCI_AML2_WT_peaks_only.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-
-OCI_AML2_C5_C9_overlap_peaks <- venn$overlapList[["110"]][["C5_ATAC_peaks.bed"]] %>%
-  as.data.frame() %>%
-  dplyr::select(c("seqnames", "start", "end"))
-
-write.table(OCI_AML2_C5_C9_overlap_peaks, file = "./homer_input_/OCI_AML2_C5_C9_overlap_peaks.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 OCI_AML2_C5_peaks <- venn$overlapList[["100"]][["C5_ATAC_peaks.bed"]] %>%
   as.data.frame() %>%
   dplyr::select(c("seqnames", "start", "end")) %>%
   rbind(OCI_AML2_C5_C9_overlap_peaks)
 
-write.table(OCI_AML2_C5_peaks, file = "./homer_input/OCI_AML2_C5_peaks.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
+write.table(OCI_AML2_C5_peaks, file = "./input_after_upset/OCI_AML2_C5_peaks.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 OCI_AML2_C9_peaks <- venn$overlapList[["010"]][["C9_ATAC_peaks.bed"]] %>%
   as.data.frame() %>%
   dplyr::select(c("seqnames", "start", "end")) %>%
   rbind(OCI_AML2_C5_C9_overlap_peaks)
 
-write.table(OCI_AML2_C9_peaks, file = "./homer_input/OCI_AML2_C9_peaks.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
+write.table(OCI_AML2_C9_peaks, file = "./input_after_upset/OCI_AML2_C9_peaks.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+
+OCI_AML2_C5_C9_overlap_peaks <- venn$overlapList[["110"]][["C5_ATAC_peaks.bed"]] %>%
+  as.data.frame() %>%
+  dplyr::select(c("seqnames", "start", "end"))
+
+write.table(OCI_AML2_C5_C9_overlap_peaks, file = "./input_after_upset/OCI_AML2_C5_C9_overlap_peaks.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+
+OCI_AML2_WT_C5_C9_overlap_peaks <- venn$overlapList[["111"]][["WT_ATAC_peaks.bed"]] %>%
+  as.data.frame() %>%
+  dplyr::select(c("seqnames", "start", "end"))
+
+write.table(OCI_AML2_WT_C5_C9_overlap_peaks, file = "./input_after_upset/OCI_AML2_WT_C5_C9_peaks_overlap.bed", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 #For simplicity, these numbers are manually added in the plot, taken from the upSet plot created earlier - make sure they match
 plot <- data.frame("C5 gained\naccessible regions" = venn@counts[["110"]]+venn@counts[["100"]], 
