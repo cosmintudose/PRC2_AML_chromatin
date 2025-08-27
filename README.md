@@ -35,11 +35,11 @@ For reproducibility of the R scripts an environment file is provided in the form
 | CUT_and_RUN/7_h3k27ac_quantification.R                   | Fig. S2I                       | Venn diagram me3 ac RNA |
 | CUT_and_RUN/8_heatmaps.sh                                | Fig. 2C, 3B, S2C, D, E         | CUT&RUN signal heatmaps and profile plots |
 | ATAC_Seq/1_atac_pca_macs2_peaks.R                        | Fig. S3A                       | ATAC-Seq replicates PCA |
-| ATAC_Seq/4_upset_atac_called_peaks.R                     | Fig. 4A, S4B                   | ATAC-Seq summaries across WT C5 and C9 |
-| ATAC_Seq/5_overlaps_inter_intra_rna_atac.R               | Fig. S5C, D, E, F, G           | ATAC-Seq and RNA-Seq overlaps |
-| ATAC_Seq/6_annotate_peaks.R                              | Fig. 4B                        | Annotate ATAC peaks to genomic regions |
-| ATAC_Seq/7_1_nucs_positioning.R                          | Fig. 4E, F, G, S6              | Nucleosome positioning analysis |
-| ATAC_Seq/8_heatmaps_atac_diff_expr_genes                 | Fig. S5A, B                    | Heatmaps of NFRs at TSS of up- and down-regulated genes |
+| ATAC_Seq/4_upset_atac_called_peaks.R                     | Fig. 3A, S3B                   | ATAC-Seq summaries across WT C5 and C9 |
+| ATAC_Seq/5_overlaps_inter_intra_rna_atac.R               | Fig. S3E, F, G, H, I           | ATAC-Seq and RNA-Seq overlaps |
+| ATAC_Seq/6_annotated_peaks_contrasts_upset.R             | Fig. 3C                        | Annotate ATAC peaks to genomic regions |
+| ATAC_Seq/7_1_nucs_positioning.R                          | Fig. 3E, F, G, S3J             | Nucleosome positioning analysis |
+| ATAC_Seq/8_heatmaps_atac_diff_expr_genes                 | Fig. S3C, D                    | Heatmaps of NFRs at TSS of up- and down-regulated genes |
 | Hi_C/2_coolpuppy_pileups/Snakefile                       | Fig. 4B, C, D, S4D             | Pileups of loops/H3K27me3/H3K27ac regions |
 | Hi_C/3_upset_loops.R                                     | Fig. 4A                        | Overlaps of called loops |
 | pygenometracks_figs/make_pygenometracks_figs.sh          | Fig. 5A, B, E, S2H, S4A        | All tracks plots for specific genomic regions |
