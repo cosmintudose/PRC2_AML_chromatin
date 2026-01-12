@@ -7,7 +7,7 @@ library(EnsDb.Hsapiens.v86)
 library(edgeR)
 library(colorspace)
 library(Cairo)
-
+library(cowplot)
 
 ### read data----
 targets.aml2 <- read_tsv("./RNA_Seq/study_design.txt") %>%
