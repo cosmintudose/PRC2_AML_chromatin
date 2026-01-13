@@ -334,7 +334,7 @@ nucleosome_fuziness_plot <- nuc_dist_merged %>%
   ggplot(aes(x = sample, y = V13, fill = sample)) +
   coord_cartesian(y = c(15, 60)) +
   geom_boxplot(outlier.shape = NA) +
-  scale_fill_manual(values = c("grey40", "#E69F00", "#56B4E9")) +
+  scale_fill_manual(values = c("grey50", "#E69F00", "#56B4E9")) +
   theme_bw(base_size = 20) +
   theme(legend.position = "none") +
   xlab("Sample") +
@@ -343,6 +343,9 @@ nucleosome_fuziness_plot <- nuc_dist_merged %>%
                                                  "-2 nuc" = "-2 nucleosome",
                                                  "+1 nuc" = "+1 nucleosome", 
                                                  "+2 nuc" = "+2 nucleosome"))) + 
+stat_summary(fun = median, geom = "text",
+               aes(label = round(after_stat(y), 2)),
+               vjust = -0.4, size = 3.5, color = "black") + 
   stat_compare_means(method= "wilcox.test", comparisons = nucs_comparisons) +
   theme(panel.grid = element_blank())
 
@@ -352,7 +355,7 @@ ggsave(filename = "./ATAC_Seq/plots/nucleosome_fuzzines_per_nuc_1row.pdf", plot 
 nus_occupancy_score_plot <- nuc_dist_merged %>%
   ggplot(aes(x = sample, y = V5, fill = sample)) +
   geom_boxplot(outlier.colour = NA) +
-  scale_fill_manual(values = c("grey40", "#E69F00", "#56B4E9")) +
+  scale_fill_manual(values = c("grey50", "#E69F00", "#56B4E9")) +
   theme_bw(base_size = 20) +
   coord_cartesian(y = c(0.2, 1.25)) +
   xlab("Sample") +
@@ -361,6 +364,9 @@ nus_occupancy_score_plot <- nuc_dist_merged %>%
                                                  "-2 nuc" = "-2 nucleosome",
                                                  "+1 nuc" = "+1 nucleosome", 
                                                  "+2 nuc" = "+2 nucleosome"))) +
+stat_summary(fun = median, geom = "text",
+               aes(label = round(after_stat(y), 2)),
+               vjust = -0.4, size = 3.5, color = "black") + 
   stat_compare_means(method= "wilcox.test", comparisons = nucs_comparisons) +
   theme(panel.grid = element_blank(), legend.position = "none") + 
   scale_y_continuous(breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1), 
