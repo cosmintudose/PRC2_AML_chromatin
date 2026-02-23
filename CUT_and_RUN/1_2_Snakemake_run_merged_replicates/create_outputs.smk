@@ -57,7 +57,7 @@ rule seacr:
 
 		input_control = "bedgraphs/{condition}_IgG_1/{condition}_IgG_1.bedgraph"
 	output:
-		"seacr/{condition}_{mark}_downsampled"
+		"seacr/{condition}_{mark}"
 	params:
 		prefix = ".stringent.bed"
 	shell:
