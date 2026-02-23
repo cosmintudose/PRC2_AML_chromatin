@@ -11,9 +11,9 @@ rule index_bams:
 
 rule bedgraph: #code taken from https://github.com/FredHutch/SEACR
 	input:
-		"deduped/{sample}/{sample}_deduped_downsampled.bam"
+		"deduped/{sample}/{sample}_deduped.bam"
 	output:
-		"bedgraphs/{sample}/{sample}_downsampled.bedgraph"
+		"bedgraphs/{sample}/{sample}.bedgraph"
 	params:
 		genome = "/home/administrator/Bowtie2Index/chrom.sizes"
 	shell:
@@ -28,7 +28,7 @@ rule bedgraph_to_bigwig:
 	input: 
 		rules.bedgraph.output
 	output:
-		"bedgraphs/{sample}/{sample}_downsampled.bigwig"
+		"bedgraphs/{sample}/{sample}.bigwig"
 	params:
 		genome = "/home/administrator/Bowtie2Index/chrom.sizes"
 	shell:
@@ -38,9 +38,9 @@ rule bedgraph_to_bigwig:
 
 rule bamcov:
 	input:
-		input_files = "deduped/{sample}/{sample}_deduped_downsampled.bam",
+		input_files = "deduped/{sample}/{sample}_deduped.bam",
 	output:
-		"bigwigs/{sample}_downsampled.bigwig"
+		"bigwigs/{sample}.bigwig"
 	shell:
 		"bamCoverage --bam {input.input_files} "
 		"-o {output} " 
@@ -53,7 +53,7 @@ rule bamcov:
 
 rule seacr:
 	input:
-		input_files = "bedgraphs/{condition}_{mark}/{condition}_{mark}_downsampled.bedgraph",
+		input_files = "bedgraphs/{condition}_{mark}/{condition}_{mark}.bedgraph",
 
 		input_control = "bedgraphs/{condition}_IgG_1/{condition}_IgG_1.bedgraph"
 	output:
